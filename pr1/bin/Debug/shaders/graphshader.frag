@@ -50,7 +50,7 @@ float iterateJulia(vec2 coord){
 float iterateMandelbrot(vec2 coord){
 	vec2 z = vec2(0,0);
 	for(int i=0;i<maxIterations;i++){
-		z = squareImaginary(squareImaginary(z) + coord) + squareImaginary(z) + coord;
+		z = squareImaginary(z) + coord;
 		if(length(z)>2) return i;
 	}
 	return maxIterations;

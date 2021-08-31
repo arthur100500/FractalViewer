@@ -11,7 +11,7 @@ namespace FractalRenderer
     public class Window : GameWindow
     {
         float zoomer = 0.01f;
-        int max_iter = 512;
+        int max_iter = 256;
         float idk_what_y = 0f;
         float idk_what_x = 0f;
         ZoomablePlane p;
@@ -67,10 +67,17 @@ namespace FractalRenderer
                     idk_what_x += 0.001f;
                 if (kbrd.IsKeyDown(Key.Number4))
                     idk_what_y += 0.001f;
-                p.plane._shader.SetFloat("r_multiplier", zoomer);
-                p.plane._shader.SetInt("maxIterations", max_iter);
-                p.plane._shader.SetFloat("idk_x", idk_what_x);
-                p.plane._shader.SetFloat("idk_y", idk_what_y);
+                try
+                {
+                    p.plane._shader.SetFloat("r_multiplier", zoomer);
+                    p.plane._shader.SetInt("maxIterations", max_iter);
+                    p.plane._shader.SetFloat("idk_x", idk_what_x);
+                    p.plane._shader.SetFloat("idk_y", idk_what_y);
+                }
+                catch (Exception ex)
+                {
+                    
+                }
             }
             if (kbrd.IsKeyDown(Key.Minus))
             {
@@ -82,10 +89,17 @@ namespace FractalRenderer
                     idk_what_x -= 0.001f;
                 if (kbrd.IsKeyDown(Key.Number4))
                     idk_what_y -= 0.001f;
-                p.plane._shader.SetFloat("r_multiplier", zoomer);
-                p.plane._shader.SetInt("maxIterations", max_iter);
-                p.plane._shader.SetFloat("idk_x", idk_what_x);
-                p.plane._shader.SetFloat("idk_y", idk_what_y);
+                try
+                {
+                    p.plane._shader.SetFloat("r_multiplier", zoomer);
+                    p.plane._shader.SetInt("maxIterations", max_iter);
+                    p.plane._shader.SetFloat("idk_x", idk_what_x);
+                    p.plane._shader.SetFloat("idk_y", idk_what_y);
+                }
+                catch (Exception ex)
+                {
+                    
+                }
             }
             p.PassScroll(this, mouse);
             base.OnUpdateFrame(e);
@@ -121,9 +135,7 @@ namespace FractalRenderer
         }
         protected override void OnUnload(EventArgs e)
         {
-
             base.OnUnload(e);
         }
-
     }
 }
