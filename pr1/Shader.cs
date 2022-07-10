@@ -1,18 +1,16 @@
 ﻿using System;
-using System.IO;
-using System.Text;
 using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL4;
+using System.IO;
 using OpenTK;
+using OpenTK.Graphics.OpenGL4;
 
 namespace FractalRenderer
 {
     // A simple class meant to help create shaders.
     public class Shader
     {
-        public readonly int Handle;
-
         private readonly Dictionary<string, int> _uniformLocations;
+        public readonly int Handle;
 
         public Shader(string vertPath, string fragPath)
         {
@@ -61,7 +59,6 @@ namespace FractalRenderer
             Console.WriteLine(code);
             if (code != (int)All.True)
             {
-                
                 var infoLog = GL.GetShaderInfoLog(shader);
                 Misc.PrintShaderError(text, infoLog);
                 //throw new Exception($"Error occurred whilst compiling Shader({shader}).\n\n{infoLog}");
@@ -73,10 +70,7 @@ namespace FractalRenderer
             GL.LinkProgram(program);
 
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out var code);
-            if (code != (int)All.True)
-            {
-                throw new Exception($"Error occurred whilst linking Program({program})");
-            }
+            if (code != (int)All.True) throw new Exception($"Error occurred whilst linking Program({program})");
         }
 
         public void Use()
@@ -90,7 +84,7 @@ namespace FractalRenderer
         }
 
         /// <summary>
-        /// Set a uniform int on this shader.
+        ///     Set a uniform int on this shader.
         /// </summary>
         /// <param name="name">The name of the uniform</param>
         /// <param name="data">The data to set</param>
@@ -101,7 +95,7 @@ namespace FractalRenderer
         }
 
         /// <summary>
-        /// Set a uniform float on this shader.
+        ///     Set a uniform float on this shader.
         /// </summary>
         /// <param name="name">The name of the uniform</param>
         /// <param name="data">The data to set</param>
@@ -112,14 +106,14 @@ namespace FractalRenderer
         }
 
         /// <summary>
-        /// Set a uniform Matrix4 on this shader
+        ///     Set a uniform Matrix4 on this shader
         /// </summary>
         /// <param name="name">The name of the uniform</param>
         /// <param name="data">The data to set</param>
         /// <remarks>
-        ///   <para>
-        ///   The matrix is transposed before being sent to the shader.
-        ///   </para>
+        ///     <para>
+        ///         The matrix is transposed before being sent to the shader.
+        ///     </para>
         /// </remarks>
         public void SetMatrix4(string name, Matrix4 data)
         {
@@ -128,7 +122,7 @@ namespace FractalRenderer
         }
 
         /// <summary>
-        /// Set a uniform Vector3 on this shader.
+        ///     Set a uniform Vector3 on this shader.
         /// </summary>
         /// <param name="name">The name of the uniform</param>
         /// <param name="data">The data to set</param>

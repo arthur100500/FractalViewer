@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK.Input;
-using OpenTK;
+
 namespace FractalRenderer
 {
     public class Button
     {
-        Plane plane;
-        Texture texture;
-        Shader shader;
-        Func<bool> reaction;
-        Action reaction2;
-        Window base_w;
-        bool pressed = false;
+        private readonly Window base_w;
+        private readonly Plane plane;
+        private bool pressed;
+        private readonly Func<bool> reaction;
+        private readonly Action reaction2;
+        private readonly Shader shader;
+        private readonly Texture texture;
 
         public Button(string tex_path, Func<bool> func, Window base_wnd)
         {
@@ -39,10 +35,12 @@ namespace FractalRenderer
         {
             plane.ReshapeWithCoords(top_x, top_y, bottom_x, bottom_y);
         }
+
         public void Load()
         {
             plane.Load();
         }
+
         public void OnPress()
         {
             if (reaction != null)
@@ -50,10 +48,12 @@ namespace FractalRenderer
             if (reaction2 != null)
                 reaction2();
         }
+
         public void Render()
         {
             plane.Render();
         }
+
         public void Unload()
         {
             plane.Unload();
@@ -61,7 +61,7 @@ namespace FractalRenderer
 
         public void Update(MouseState mouse, bool react)
         {
-            float[] info = plane.GetRelativeCursorPosition(base_w, mouse.X, mouse.Y);
+            var info = plane.GetRelativeCursorPosition(base_w, mouse.X, mouse.Y);
             if (info[0] <= 1.0 && info[0] >= 0.0 && info[1] <= 1.0 && info[1] >= 0.0)
             {
                 shader.SetFloat("mouse_hover", 1.0f);
@@ -75,10 +75,8 @@ namespace FractalRenderer
             {
                 shader.SetFloat("mouse_hover", 0.0f);
             }
-            if (mouse.IsButtonUp(MouseButton.Left))
-            {
-                pressed = false;
-            }
+
+            if (mouse.IsButtonUp(MouseButton.Left)) pressed = false;
         }
     }
 }
